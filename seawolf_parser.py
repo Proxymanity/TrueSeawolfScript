@@ -12,12 +12,23 @@ precedence = (
 )
 
 def p_assignment(p):
-    """statement : VARNAME EQUALS expression"""
+    """
+        statement : VARNAME EQUALS expression
+                | VARNAME EQUALS string
+    """
     global_variables[p[1]] = p[3]
 
+def p_string(p):
+    """
+        string : STRING
+    """
+    p[0] = p[1].strip("\"")
 
 def p_statement(p):
-    """statement : expression"""
+    """
+        statement : expression
+            | string
+    """
     print(p[1])
 
 
@@ -42,17 +53,23 @@ def p_expression(p):
 
 
 def p_expression_Paren(p):
-    """expression : LPAREN expression RPAREN"""
+    """
+        expression : LPAREN expression RPAREN
+    """
     p[0] = p[2]
 
 
 def p_expression_number(p):
-    """expression : NUMBER"""
+    """
+        expression : NUMBER
+    """
     p[0] = p[1]
 
 
 def p_expression_var(p):
-    """expression : VARNAME"""
+    """
+        expression : VARNAME
+    """
     try:
         p[0] = global_variables[p[1]]
     except LookupError:
