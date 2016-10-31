@@ -46,6 +46,8 @@ def p_expression(p):
             | expression MULT expression
             | expression DIVIDE expression
             | expression MODULO expression
+            | expression EXP expression
+            | expression FLDIV expression
     """
     if p[2] == '+':
         p[0] = p[1] + p[3]
@@ -57,6 +59,10 @@ def p_expression(p):
         p[0] = p[1] / p[3]
     elif p[2] == '%':
         p[0] = p[1] % p[3]
+    elif p[2] == '**':
+        p[0] = p[1] ** p[3]
+    elif p[2] == '//':
+        p[0] = p[1] // p[3]
 
 def p_expression_and(p):
     """
@@ -77,6 +83,8 @@ def p_expression_or(p):
             p[0] = 0
         else:
             p[0] = 1
+    else:
+        p[0] = "SEMANTIC ERROR"
 
 def p_expression_not(p):
     """
@@ -87,6 +95,51 @@ def p_expression_not(p):
             p[0] = 1
         else:
             p[0] = 0
+
+def p_expression_compare(p):
+    """
+        expression : expression LESST expression
+                | expression GREATERT expression
+                | expression LESSEQ expression
+                | expression GREATEREQ expression
+                | expression EQUALTO expression
+                | expression NOTEQ expression
+    """
+    if isinstance(p[1], int) and isinstance(p[3], int):
+        if p[2] == '<':
+            if p[1] < p[3]:
+                p[0] = 1
+            else:
+                p[0] = 0
+        elif p[2] == '>':
+            if p[1] > p[3]:
+                p[0] = 1
+            else:
+                p[0] = 0
+        elif p[2] == '<=':
+            if p[1] <= p[3]:
+                p[0] = 1
+            else:
+                p[0] = 0
+        elif p[2] == '>=':
+            if p[1] >= p[3]:
+                p[0] = 1
+            else:
+                p[0] = 0
+        elif p[2] == '==':
+            if p[1] == p[3]:
+                p[0] = 1
+            else:
+                p[0] = 0
+        elif p[2] == '<>':
+            if p[1] != p[3]:
+                p[0] = 1
+            else:
+                p[0] = 0
+    else:
+        p[0] = "SEMANTIC ERROR"
+
+
 
 def p_expression_Paren(p):
     """
