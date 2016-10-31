@@ -15,6 +15,7 @@ def p_assignment(p):
     """
         statement : VARNAME EQUALS expression
                 | VARNAME EQUALS string_expression
+                | VARNAME EQUALS list
     """
     global_variables[p[1]] = p[3]
 
@@ -23,7 +24,7 @@ def p_string_expression(p):
         string_expression : string_expression PLUS string_expression
             | STRING
     """
-    if len(p) > 1:
+    if len(p) > 2:
         if p[2] == "+":
             p[0] = p[1] + p[2]
     else:
@@ -33,6 +34,7 @@ def p_statement(p):
     """
         statement : expression
             | string_expression
+            | list
     """
     print(p[1])
 
@@ -56,12 +58,42 @@ def p_expression(p):
     elif p[2] == '%':
         p[0] = p[1] % p[3]
 
+def p_expression_and(p):
+    """
+        expression : expression AND expression
+    """
+    if isinstance(p[1],int) and isinstance(p[3],int):
+        if p[1] == 0 or p[3] == 0:
+            p[0] = 0
+        else:
+            p[0] = 1
+
+def p_expression_or(p):
+    """
+        expression : expression OR expression
+    """
+    if isinstance(p[1], int) and isinstance(p[3], int):
+        if p[1] == 0 and p[3] == 0:
+            p[0] = 0
+        else:
+            p[0] = 1
+
+def p_expression_not(p):
+    """
+        expression : NOT expression
+    """
+    if isinstance(p[1], int):
+        if p[1] == 0:
+            p[0] = 1
+        else:
+            p[0] = 0
 
 def p_expression_Paren(p):
     """
         expression : LPAREN expression RPAREN
     """
     p[0] = p[2]
+
 
 
 def p_expression_number(p):
@@ -82,24 +114,25 @@ def p_expression_var(p):
 
 
 
-#def p_assignment(p):
- #   """
-  #      assignment : VARNAME EQUALS expression
-   # """
-    #global_variables[p[1]] = p[3]
-    #p[0] = p[3]
-    #print (global_variables)
+def p_list(p):
+    """
+        list : LBRACK list_item RBRACK
+            | LBRACK RBRACK
+    """
+    if(len(p) > 3):
+        p[0] = p[2]
+    else:
+        p[0] = []
 
-#def p_factor(p):
-#    """
-#    factor : INT_CONST
-#        | LPAREN expression RPAREN
-#        | variable
-#    """
-#    if len(p) == 4:
-#        p[0] = p[2]
-#    else:
-#        p[0] = int(p[1])
+def p_list_item(p):
+    """
+        list_item : list_item COMMA list_item
+            | expression
+    """
+    if (len(p) < 3):
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + p[3]
 
 def p_error(p):
     print("Syntax error\n")
