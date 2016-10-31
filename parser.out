@@ -1,0 +1,46 @@
+Created by PLY version 3.9 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    MULT
+
+Grammar
+
+Rule 0     S' -> variable
+Rule 1     variable -> VARNAME
+Rule 2     term -> term
+Rule 3     expression -> expression PLUS expression
+Rule 4     expression -> expression MINUS expression
+Rule 5     expression -> expression TIMES expression
+Rule 6     expression -> expression DIVIDE expression
+Rule 7     expression -> expression MODULO expression
+Rule 8     program -> expression
+Rule 9     assignment -> VARNAME EQUALS expression
+Rule 10    factor -> INT_CONST
+Rule 11    factor -> LPAREN expression RPAREN
+Rule 12    factor -> variable
+
+Terminals, with rules where they appear
+
+DIVIDE               : 6
+EQUALS               : 9
+INT_CONST            : 10
+LPAREN               : 11
+MINUS                : 4
+MULT                 : 
+PLUS                 : 3
+RPAREN               : 11
+VARNAME              : 1 9
+error                : 
+
+Nonterminals, with rules where they appear
+
+MODULO               : 7
+TIMES                : 5
+assignment           : 
+expression           : 3 3 4 4 5 5 6 6 7 7 8 9 11
+factor               : 
+program              : 
+term                 : 2
+variable             : 12 0
+
