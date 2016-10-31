@@ -8,4 +8,3 @@ while(True):
     if not s:
         continue
     result = seawolf_parser.parser.parse(s)
-    print(result)

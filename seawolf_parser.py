@@ -14,20 +14,25 @@ precedence = (
 def p_assignment(p):
     """
         statement : VARNAME EQUALS expression
-                | VARNAME EQUALS string
+                | VARNAME EQUALS string_expression
     """
     global_variables[p[1]] = p[3]
 
-def p_string(p):
+def p_string_expression(p):
     """
-        string : STRING
+        string_expression : string_expression PLUS string_expression
+            | STRING
     """
-    p[0] = p[1].strip("\"")
+    if len(p) > 1:
+        if p[2] == "+":
+            p[0] = p[1] + p[2]
+    else:
+        p[0] = p[1].strip("\"")
 
 def p_statement(p):
     """
         statement : expression
-            | string
+            | string_expression
     """
     print(p[1])
 
@@ -64,7 +69,6 @@ def p_expression_number(p):
         expression : NUMBER
     """
     p[0] = p[1]
-
 
 def p_expression_var(p):
     """
