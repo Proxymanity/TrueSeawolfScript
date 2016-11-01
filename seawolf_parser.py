@@ -7,37 +7,41 @@ global_variables = dict()
 # global_variables[‘ABC’] = 5
 
 precedence = (
+    ('left', 'OR'),
+    ('left', 'AND'),
+    ('left', 'NOT'),
+    ('left', 'LESST', 'GREATERT','LESSEQ','GREATEREQ','EQUALTO','NOTEQ'),
+    ('left', 'IN'),
     ('left', 'PLUS', 'MINUS'),
-    ('left', 'MULT', 'DIVIDE', 'MODULO'),
+    ('left', 'FLDIV'),
+    ('left', 'EXP'),
+    ('left', 'MODULO'),
+    ('left', 'MULT', 'DIVIDE'),
 )
 
 def p_assignment(p):
     """
         statement : VARNAME EQUALS expression
-                | VARNAME EQUALS string_expression
-                | VARNAME EQUALS list
     """
     global_variables[p[1]] = p[3]
-
-def p_string_expression(p):
-    """
-        string_expression : string_expression PLUS string_expression
-            | STRING
-    """
-    if len(p) > 2:
-        if p[2] == "+":
-            p[0] = p[1] + p[2]
-    else:
-        p[0] = p[1].strip("\"")
 
 def p_statement(p):
     """
         statement : expression
-            | string_expression
-            | list
     """
     print(p[1])
 
+def p_expression_string(p):
+    """
+        expression : string_expression
+    """
+    p[0] = p[1]
+
+def p_expression_list(p):
+    """
+        expression : list
+    """
+    p[0] = p[1]
 
 def p_expression(p):
     """
@@ -49,21 +53,23 @@ def p_expression(p):
             | expression EXP expression
             | expression FLDIV expression
     """
-    if p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/':
-        p[0] = p[1] / p[3]
-    elif p[2] == '%':
-        p[0] = p[1] % p[3]
-    elif p[2] == '**':
-        p[0] = p[1] ** p[3]
-    elif p[2] == '//':
-        p[0] = p[1] // p[3]
-
+    if((type(p[1]) == type(p[3])) or (type(p[1]) == int and type(p[3]) == float) or (type(p[1])== float and type(p[3])==int)):
+        if p[2] == '+':
+            p[0] = p[1] + p[3]
+        if p[2] == '-':
+            p[0] = p[1] - p[3]
+        elif p[2] == '*':
+            p[0] = p[1] * p[3]
+        elif p[2] == '/':
+            p[0] = p[1] / p[3]
+        elif p[2] == '%':
+            p[0] = p[1] % p[3]
+        elif p[2] == '**':
+            p[0] = p[1] ** p[3]
+        elif p[2] == '//':
+            p[0] = p[1] // p[3]
+    else:
+        p[0] = "SEMANTIC ERROR"
 def p_expression_and(p):
     """
         expression : expression AND expression
@@ -165,7 +171,15 @@ def p_expression_var(p):
         print("Undefined ID '%s'" % p[1])
         p[0] = 0
 
-
+def p_index(p):
+    """
+        expression : list LBRACK expression RBRACK
+                | string_expression LBRACK expression RBRACK
+    """
+    if(isinstance(p[3],int) and(isinstance(p[1], list) or isinstance(p[1],str))):
+            p[0] = (p[1])[p[3]]
+    else:
+        p[0] = "SEMANTIC ERROR"
 
 def p_list(p):
     """
@@ -183,11 +197,42 @@ def p_list_item(p):
             | expression
     """
     if (len(p) < 3):
-        p[0] = [p[1]]
-    else:
+      p[0] = [p[1]]
+    elif (type(p[1]) == type(p[3])):
         p[0] = p[1] + p[3]
+    else:
+        p[0] = "SEMANTIC ERROR"
+
+def p_string_expression(p):
+    """
+        string_expression : string_expression PLUS string_expression
+            | STRING
+    """
+    if len(p) > 2:
+        if p[2] == "+":
+            if (type(p[1]) == type(p[3])):
+                p[0] = p[1] + p[3]
+            else:
+                p[0] = "SEMANTIC ERROR"
+    elif p[1] == "":
+        p[0] = p[0]
+    else:
+        p[0] = p[1].strip("\"")
+
+def p_in(p):
+    """
+        expression : expression IN list
+                | string_expression IN string_expression
+    """
+    if(isinstance(p[1],float)):
+        p[0] = "SEMANTIC ERROR"
+    else:
+        if p[1] in p[3]:
+            p[0] = 1
+        else:
+            p[0] = 0
 
 def p_error(p):
-    print("Syntax error\n")
+    print("SYNTAX ERROR")
 
 parser = yacc.yacc()

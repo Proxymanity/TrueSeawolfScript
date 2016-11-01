@@ -4,7 +4,8 @@ from ply import lex
 reserved = {
     'and' : 'AND',
     'or' : 'OR',
-    'not' : 'NOT'
+    'not' : 'NOT',
+    'in' : 'IN'
 }
 tokens = ['LPAREN','RPAREN','PLUS','MINUS', 'MULT', 'DIVIDE', 'MODULO', 'EQUALS', 'VARNAME', 'NUMBER', 'STRING', 'LBRACK', 'RBRACK', 'COMMA','LESST','GREATERT',
             'LESSEQ','GREATEREQ','EQUALTO', 'NOTEQ','EXP','FLDIV'] + list(reserved.values())
@@ -21,7 +22,7 @@ t_MINUS = r'-'
 t_MULT = r'\*'
 t_DIVIDE = r'/'
 t_MODULO = r'%'
-t_STRING = r'"[ !#-~_] [ !#-~_]*"'
+t_STRING = r'"[ !#-~_]*"'
 t_EQUALS = r'='
 def t_VARNAME(p):
     r'[_a-zA-Z] [_a-zA-Z0-9]*'
@@ -53,7 +54,7 @@ def t_NUMBER(p):
         p.value = float(p.value)
         return p
     except ValueError:
-        print("Number Error")
+        print("SYNTAX ERROR")
         p.value = 0
     return p
 
