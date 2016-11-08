@@ -13,6 +13,11 @@ tokens = ['LPAREN','RPAREN','PLUS','MINUS', 'MULT', 'DIVIDE', 'MODULO', 'EQUALS'
 def t_error(t):
     pass
 
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += t.value.count("\n")
+
+
 t_ignore = r' \t'
 
 t_LPAREN = r'\('
@@ -26,7 +31,7 @@ t_STRING = r'"[ !#-~_]*"'
 t_EQUALS = r'='
 def t_VARNAME(p):
     r'[_a-zA-Z] [_a-zA-Z0-9]*'
-    p.type = reserved.get(p.value)  # Check for reserved words
+    p.type = reserved.get(p.value, 'VARNAME')  # Check for reserved words
     return p
 t_LBRACK = r'\['
 t_RBRACK = r'\]'
@@ -59,5 +64,3 @@ def t_NUMBER(p):
     return p
 
 lexer = lex.lex()
-if __name__ == '__main__':
-     lex.runmain()
