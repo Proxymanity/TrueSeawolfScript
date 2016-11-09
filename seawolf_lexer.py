@@ -5,10 +5,14 @@ reserved = {
     'and' : 'AND',
     'or' : 'OR',
     'not' : 'NOT',
-    'in' : 'IN'
+    'in' : 'IN',
+    'print' : 'PRINT',
+    'if' : 'IF',
+    'while' : 'WHILE'
+
 }
 tokens = ['LPAREN','RPAREN','PLUS','MINUS', 'MULT', 'DIVIDE', 'MODULO', 'EQUALS', 'VARNAME', 'NUMBER', 'STRING', 'LBRACK', 'RBRACK', 'COMMA','LESST','GREATERT',
-            'LESSEQ','GREATEREQ','EQUALTO', 'NOTEQ','EXP','FLDIV'] + list(reserved.values())
+            'LESSEQ','GREATEREQ','EQUALTO', 'NOTEQ','EXP','FLDIV','LCURL','RCURL','SEMI'] + list(reserved.values())
 
 def t_error(t):
     pass
@@ -47,6 +51,9 @@ t_GREATEREQ = r'>='
 t_EQUALTO = r'=='
 t_NOTEQ = r'<>'
 
+t_LCURL = r'\{'
+t_RCURL = r'\}'
+t_SEMI = r';'
 def t_NUMBER(p):
     r'([0-9]+[\.][0-9]+) | ([0-9]+)'
     try:

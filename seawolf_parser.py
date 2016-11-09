@@ -21,7 +21,7 @@ precedence = (
 
 def p_assignment(p):
     """
-        statement : VARNAME EQUALS expression
+        statement : VARNAME EQUALS expression SEMI
     """
     global_variables[p[1]] = p[3]
 
@@ -168,8 +168,8 @@ def p_expression_var(p):
     try:
         p[0] = global_variables[p[1]]
     except LookupError:
-        print("Undefined ID '%s'" % p[1])
-        p[0] = 0
+        #print("Undefined ID '%s'" % p[1])
+        p[0] = "SEMANTIC ERROR"
 
 def p_index(p):
     """

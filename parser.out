@@ -2,45 +2,2772 @@ Created by PLY version 3.9 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    MULT
+    RCURL
+    PRINT
+    LCURL
 
 Grammar
 
-Rule 0     S' -> variable
-Rule 1     variable -> VARNAME
-Rule 2     term -> term
-Rule 3     expression -> expression PLUS expression
-Rule 4     expression -> expression MINUS expression
-Rule 5     expression -> expression TIMES expression
-Rule 6     expression -> expression DIVIDE expression
-Rule 7     expression -> expression MODULO expression
-Rule 8     program -> expression
-Rule 9     assignment -> VARNAME EQUALS expression
-Rule 10    factor -> INT_CONST
-Rule 11    factor -> LPAREN expression RPAREN
-Rule 12    factor -> variable
+Rule 0     S' -> statement
+Rule 1     statement -> VARNAME EQUALS expression SEMI
+Rule 2     statement -> expression
+Rule 3     expression -> string_expression
+Rule 4     expression -> list
+Rule 5     expression -> expression PLUS expression
+Rule 6     expression -> expression MINUS expression
+Rule 7     expression -> expression MULT expression
+Rule 8     expression -> expression DIVIDE expression
+Rule 9     expression -> expression MODULO expression
+Rule 10    expression -> expression EXP expression
+Rule 11    expression -> expression FLDIV expression
+Rule 12    expression -> expression AND expression
+Rule 13    expression -> expression OR expression
+Rule 14    expression -> NOT expression
+Rule 15    expression -> expression LESST expression
+Rule 16    expression -> expression GREATERT expression
+Rule 17    expression -> expression LESSEQ expression
+Rule 18    expression -> expression GREATEREQ expression
+Rule 19    expression -> expression EQUALTO expression
+Rule 20    expression -> expression NOTEQ expression
+Rule 21    expression -> LPAREN expression RPAREN
+Rule 22    expression -> NUMBER
+Rule 23    expression -> VARNAME
+Rule 24    expression -> list LBRACK expression RBRACK
+Rule 25    expression -> string_expression LBRACK expression RBRACK
+Rule 26    list -> LBRACK list_item RBRACK
+Rule 27    list -> LBRACK RBRACK
+Rule 28    list_item -> list_item COMMA list_item
+Rule 29    list_item -> expression
+Rule 30    string_expression -> string_expression PLUS string_expression
+Rule 31    string_expression -> STRING
+Rule 32    expression -> expression IN list
+Rule 33    expression -> string_expression IN string_expression
 
 Terminals, with rules where they appear
 
-DIVIDE               : 6
-EQUALS               : 9
-INT_CONST            : 10
-LPAREN               : 11
-MINUS                : 4
-MULT                 : 
-PLUS                 : 3
-RPAREN               : 11
-VARNAME              : 1 9
+AND                  : 12
+COMMA                : 28
+DIVIDE               : 8
+EQUALS               : 1
+EQUALTO              : 19
+EXP                  : 10
+FLDIV                : 11
+GREATEREQ            : 18
+GREATERT             : 16
+IN                   : 32 33
+LBRACK               : 24 25 26 27
+LCURL                : 
+LESSEQ               : 17
+LESST                : 15
+LPAREN               : 21
+MINUS                : 6
+MODULO               : 9
+MULT                 : 7
+NOT                  : 14
+NOTEQ                : 20
+NUMBER               : 22
+OR                   : 13
+PLUS                 : 5 30
+PRINT                : 
+RBRACK               : 24 25 26 27
+RCURL                : 
+RPAREN               : 21
+SEMI                 : 1
+STRING               : 31
+VARNAME              : 1 23
 error                : 
 
 Nonterminals, with rules where they appear
 
-MODULO               : 7
-TIMES                : 5
-assignment           : 
-expression           : 3 3 4 4 5 5 6 6 7 7 8 9 11
-factor               : 
-program              : 
-term                 : 2
-variable             : 12 0
+expression           : 1 2 5 5 6 6 7 7 8 8 9 9 10 10 11 11 12 12 13 13 14 15 15 16 16 17 17 18 18 19 19 20 20 21 24 25 29 32
+list                 : 4 24 32
+list_item            : 26 28 28
+statement            : 0
+string_expression    : 3 25 30 30 33 33
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . VARNAME EQUALS expression SEMI
+    (2) statement -> . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    VARNAME         shift and go to state 1
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    statement                      shift and go to state 3
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 6
+    list                           shift and go to state 2
+
+state 1
+
+    (1) statement -> VARNAME . EQUALS expression SEMI
+    (23) expression -> VARNAME .
+
+    EQUALS          shift and go to state 11
+    PLUS            reduce using rule 23 (expression -> VARNAME .)
+    MINUS           reduce using rule 23 (expression -> VARNAME .)
+    MULT            reduce using rule 23 (expression -> VARNAME .)
+    DIVIDE          reduce using rule 23 (expression -> VARNAME .)
+    MODULO          reduce using rule 23 (expression -> VARNAME .)
+    EXP             reduce using rule 23 (expression -> VARNAME .)
+    FLDIV           reduce using rule 23 (expression -> VARNAME .)
+    AND             reduce using rule 23 (expression -> VARNAME .)
+    OR              reduce using rule 23 (expression -> VARNAME .)
+    LESST           reduce using rule 23 (expression -> VARNAME .)
+    GREATERT        reduce using rule 23 (expression -> VARNAME .)
+    LESSEQ          reduce using rule 23 (expression -> VARNAME .)
+    GREATEREQ       reduce using rule 23 (expression -> VARNAME .)
+    EQUALTO         reduce using rule 23 (expression -> VARNAME .)
+    NOTEQ           reduce using rule 23 (expression -> VARNAME .)
+    IN              reduce using rule 23 (expression -> VARNAME .)
+    $end            reduce using rule 23 (expression -> VARNAME .)
+
+
+state 2
+
+    (4) expression -> list .
+    (24) expression -> list . LBRACK expression RBRACK
+
+    PLUS            reduce using rule 4 (expression -> list .)
+    MINUS           reduce using rule 4 (expression -> list .)
+    MULT            reduce using rule 4 (expression -> list .)
+    DIVIDE          reduce using rule 4 (expression -> list .)
+    MODULO          reduce using rule 4 (expression -> list .)
+    EXP             reduce using rule 4 (expression -> list .)
+    FLDIV           reduce using rule 4 (expression -> list .)
+    AND             reduce using rule 4 (expression -> list .)
+    OR              reduce using rule 4 (expression -> list .)
+    LESST           reduce using rule 4 (expression -> list .)
+    GREATERT        reduce using rule 4 (expression -> list .)
+    LESSEQ          reduce using rule 4 (expression -> list .)
+    GREATEREQ       reduce using rule 4 (expression -> list .)
+    EQUALTO         reduce using rule 4 (expression -> list .)
+    NOTEQ           reduce using rule 4 (expression -> list .)
+    IN              reduce using rule 4 (expression -> list .)
+    $end            reduce using rule 4 (expression -> list .)
+    COMMA           reduce using rule 4 (expression -> list .)
+    RBRACK          reduce using rule 4 (expression -> list .)
+    RPAREN          reduce using rule 4 (expression -> list .)
+    SEMI            reduce using rule 4 (expression -> list .)
+    LBRACK          shift and go to state 12
+
+
+state 3
+
+    (0) S' -> statement .
+
+
+
+state 4
+
+    (3) expression -> string_expression .
+    (25) expression -> string_expression . LBRACK expression RBRACK
+    (33) expression -> string_expression . IN string_expression
+    (30) string_expression -> string_expression . PLUS string_expression
+
+  ! shift/reduce conflict for IN resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+    MINUS           reduce using rule 3 (expression -> string_expression .)
+    MULT            reduce using rule 3 (expression -> string_expression .)
+    DIVIDE          reduce using rule 3 (expression -> string_expression .)
+    MODULO          reduce using rule 3 (expression -> string_expression .)
+    EXP             reduce using rule 3 (expression -> string_expression .)
+    FLDIV           reduce using rule 3 (expression -> string_expression .)
+    AND             reduce using rule 3 (expression -> string_expression .)
+    OR              reduce using rule 3 (expression -> string_expression .)
+    LESST           reduce using rule 3 (expression -> string_expression .)
+    GREATERT        reduce using rule 3 (expression -> string_expression .)
+    LESSEQ          reduce using rule 3 (expression -> string_expression .)
+    GREATEREQ       reduce using rule 3 (expression -> string_expression .)
+    EQUALTO         reduce using rule 3 (expression -> string_expression .)
+    NOTEQ           reduce using rule 3 (expression -> string_expression .)
+    $end            reduce using rule 3 (expression -> string_expression .)
+    COMMA           reduce using rule 3 (expression -> string_expression .)
+    RBRACK          reduce using rule 3 (expression -> string_expression .)
+    RPAREN          reduce using rule 3 (expression -> string_expression .)
+    SEMI            reduce using rule 3 (expression -> string_expression .)
+    LBRACK          shift and go to state 13
+    IN              shift and go to state 15
+    PLUS            shift and go to state 14
+
+  ! PLUS            [ reduce using rule 3 (expression -> string_expression .) ]
+  ! IN              [ reduce using rule 3 (expression -> string_expression .) ]
+
+
+state 5
+
+    (14) expression -> NOT . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 17
+    list                           shift and go to state 2
+
+state 6
+
+    (2) statement -> expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    $end            reduce using rule 2 (statement -> expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    AND             shift and go to state 27
+    OR              shift and go to state 22
+    LESST           shift and go to state 33
+    GREATERT        shift and go to state 29
+    LESSEQ          shift and go to state 26
+    GREATEREQ       shift and go to state 25
+    EQUALTO         shift and go to state 24
+    NOTEQ           shift and go to state 32
+    IN              shift and go to state 23
+
+
+state 7
+
+    (31) string_expression -> STRING .
+
+    LBRACK          reduce using rule 31 (string_expression -> STRING .)
+    IN              reduce using rule 31 (string_expression -> STRING .)
+    PLUS            reduce using rule 31 (string_expression -> STRING .)
+    SEMI            reduce using rule 31 (string_expression -> STRING .)
+    MINUS           reduce using rule 31 (string_expression -> STRING .)
+    MULT            reduce using rule 31 (string_expression -> STRING .)
+    DIVIDE          reduce using rule 31 (string_expression -> STRING .)
+    MODULO          reduce using rule 31 (string_expression -> STRING .)
+    EXP             reduce using rule 31 (string_expression -> STRING .)
+    FLDIV           reduce using rule 31 (string_expression -> STRING .)
+    AND             reduce using rule 31 (string_expression -> STRING .)
+    OR              reduce using rule 31 (string_expression -> STRING .)
+    LESST           reduce using rule 31 (string_expression -> STRING .)
+    GREATERT        reduce using rule 31 (string_expression -> STRING .)
+    LESSEQ          reduce using rule 31 (string_expression -> STRING .)
+    GREATEREQ       reduce using rule 31 (string_expression -> STRING .)
+    EQUALTO         reduce using rule 31 (string_expression -> STRING .)
+    NOTEQ           reduce using rule 31 (string_expression -> STRING .)
+    $end            reduce using rule 31 (string_expression -> STRING .)
+    RBRACK          reduce using rule 31 (string_expression -> STRING .)
+    COMMA           reduce using rule 31 (string_expression -> STRING .)
+    RPAREN          reduce using rule 31 (string_expression -> STRING .)
+
+
+state 8
+
+    (26) list -> LBRACK . list_item RBRACK
+    (27) list -> LBRACK . RBRACK
+    (28) list_item -> . list_item COMMA list_item
+    (29) list_item -> . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    RBRACK          shift and go to state 35
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    list_item                      shift and go to state 36
+    expression                     shift and go to state 34
+    list                           shift and go to state 2
+
+state 9
+
+    (22) expression -> NUMBER .
+
+    PLUS            reduce using rule 22 (expression -> NUMBER .)
+    MINUS           reduce using rule 22 (expression -> NUMBER .)
+    MULT            reduce using rule 22 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 22 (expression -> NUMBER .)
+    MODULO          reduce using rule 22 (expression -> NUMBER .)
+    EXP             reduce using rule 22 (expression -> NUMBER .)
+    FLDIV           reduce using rule 22 (expression -> NUMBER .)
+    AND             reduce using rule 22 (expression -> NUMBER .)
+    OR              reduce using rule 22 (expression -> NUMBER .)
+    LESST           reduce using rule 22 (expression -> NUMBER .)
+    GREATERT        reduce using rule 22 (expression -> NUMBER .)
+    LESSEQ          reduce using rule 22 (expression -> NUMBER .)
+    GREATEREQ       reduce using rule 22 (expression -> NUMBER .)
+    EQUALTO         reduce using rule 22 (expression -> NUMBER .)
+    NOTEQ           reduce using rule 22 (expression -> NUMBER .)
+    IN              reduce using rule 22 (expression -> NUMBER .)
+    $end            reduce using rule 22 (expression -> NUMBER .)
+    COMMA           reduce using rule 22 (expression -> NUMBER .)
+    RBRACK          reduce using rule 22 (expression -> NUMBER .)
+    RPAREN          reduce using rule 22 (expression -> NUMBER .)
+    SEMI            reduce using rule 22 (expression -> NUMBER .)
+
+
+state 10
+
+    (21) expression -> LPAREN . expression RPAREN
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 37
+    list                           shift and go to state 2
+
+state 11
+
+    (1) statement -> VARNAME EQUALS . expression SEMI
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 38
+    list                           shift and go to state 2
+
+state 12
+
+    (24) expression -> list LBRACK . expression RBRACK
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 39
+    list                           shift and go to state 2
+
+state 13
+
+    (25) expression -> string_expression LBRACK . expression RBRACK
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 40
+    list                           shift and go to state 2
+
+state 14
+
+    (30) string_expression -> string_expression PLUS . string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+
+    STRING          shift and go to state 7
+
+    string_expression              shift and go to state 41
+
+state 15
+
+    (33) expression -> string_expression IN . string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+
+    STRING          shift and go to state 7
+
+    string_expression              shift and go to state 42
+
+state 16
+
+    (23) expression -> VARNAME .
+
+    PLUS            reduce using rule 23 (expression -> VARNAME .)
+    MINUS           reduce using rule 23 (expression -> VARNAME .)
+    MULT            reduce using rule 23 (expression -> VARNAME .)
+    DIVIDE          reduce using rule 23 (expression -> VARNAME .)
+    MODULO          reduce using rule 23 (expression -> VARNAME .)
+    EXP             reduce using rule 23 (expression -> VARNAME .)
+    FLDIV           reduce using rule 23 (expression -> VARNAME .)
+    AND             reduce using rule 23 (expression -> VARNAME .)
+    OR              reduce using rule 23 (expression -> VARNAME .)
+    LESST           reduce using rule 23 (expression -> VARNAME .)
+    GREATERT        reduce using rule 23 (expression -> VARNAME .)
+    LESSEQ          reduce using rule 23 (expression -> VARNAME .)
+    GREATEREQ       reduce using rule 23 (expression -> VARNAME .)
+    EQUALTO         reduce using rule 23 (expression -> VARNAME .)
+    NOTEQ           reduce using rule 23 (expression -> VARNAME .)
+    IN              reduce using rule 23 (expression -> VARNAME .)
+    COMMA           reduce using rule 23 (expression -> VARNAME .)
+    RBRACK          reduce using rule 23 (expression -> VARNAME .)
+    $end            reduce using rule 23 (expression -> VARNAME .)
+    RPAREN          reduce using rule 23 (expression -> VARNAME .)
+    SEMI            reduce using rule 23 (expression -> VARNAME .)
+
+
+state 17
+
+    (14) expression -> NOT expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    AND             reduce using rule 14 (expression -> NOT expression .)
+    OR              reduce using rule 14 (expression -> NOT expression .)
+    $end            reduce using rule 14 (expression -> NOT expression .)
+    COMMA           reduce using rule 14 (expression -> NOT expression .)
+    RBRACK          reduce using rule 14 (expression -> NOT expression .)
+    RPAREN          reduce using rule 14 (expression -> NOT expression .)
+    SEMI            reduce using rule 14 (expression -> NOT expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    LESST           shift and go to state 33
+    GREATERT        shift and go to state 29
+    LESSEQ          shift and go to state 26
+    GREATEREQ       shift and go to state 25
+    EQUALTO         shift and go to state 24
+    NOTEQ           shift and go to state 32
+    IN              shift and go to state 23
+
+  ! PLUS            [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! MINUS           [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! MULT            [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! DIVIDE          [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! MODULO          [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! EXP             [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! FLDIV           [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! LESST           [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! GREATERT        [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! LESSEQ          [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! GREATEREQ       [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! EQUALTO         [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! NOTEQ           [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! IN              [ reduce using rule 14 (expression -> NOT expression .) ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+
+
+state 18
+
+    (10) expression -> expression EXP . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 43
+    list                           shift and go to state 2
+
+state 19
+
+    (7) expression -> expression MULT . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 44
+    list                           shift and go to state 2
+
+state 20
+
+    (5) expression -> expression PLUS . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 45
+    list                           shift and go to state 2
+
+state 21
+
+    (9) expression -> expression MODULO . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 46
+    list                           shift and go to state 2
+
+state 22
+
+    (13) expression -> expression OR . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 47
+    list                           shift and go to state 2
+
+state 23
+
+    (32) expression -> expression IN . list
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    LBRACK          shift and go to state 8
+
+    list                           shift and go to state 48
+
+state 24
+
+    (19) expression -> expression EQUALTO . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 49
+    list                           shift and go to state 2
+
+state 25
+
+    (18) expression -> expression GREATEREQ . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 50
+    list                           shift and go to state 2
+
+state 26
+
+    (17) expression -> expression LESSEQ . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 51
+    list                           shift and go to state 2
+
+state 27
+
+    (12) expression -> expression AND . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 52
+    list                           shift and go to state 2
+
+state 28
+
+    (11) expression -> expression FLDIV . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 53
+    list                           shift and go to state 2
+
+state 29
+
+    (16) expression -> expression GREATERT . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 54
+    list                           shift and go to state 2
+
+state 30
+
+    (6) expression -> expression MINUS . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 55
+    list                           shift and go to state 2
+
+state 31
+
+    (8) expression -> expression DIVIDE . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 56
+    list                           shift and go to state 2
+
+state 32
+
+    (20) expression -> expression NOTEQ . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 57
+    list                           shift and go to state 2
+
+state 33
+
+    (15) expression -> expression LESST . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    expression                     shift and go to state 58
+    list                           shift and go to state 2
+
+state 34
+
+    (29) list_item -> expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    COMMA           reduce using rule 29 (list_item -> expression .)
+    RBRACK          reduce using rule 29 (list_item -> expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    AND             shift and go to state 27
+    OR              shift and go to state 22
+    LESST           shift and go to state 33
+    GREATERT        shift and go to state 29
+    LESSEQ          shift and go to state 26
+    GREATEREQ       shift and go to state 25
+    EQUALTO         shift and go to state 24
+    NOTEQ           shift and go to state 32
+    IN              shift and go to state 23
+
+
+state 35
+
+    (27) list -> LBRACK RBRACK .
+
+    LBRACK          reduce using rule 27 (list -> LBRACK RBRACK .)
+    RBRACK          reduce using rule 27 (list -> LBRACK RBRACK .)
+    PLUS            reduce using rule 27 (list -> LBRACK RBRACK .)
+    MINUS           reduce using rule 27 (list -> LBRACK RBRACK .)
+    MULT            reduce using rule 27 (list -> LBRACK RBRACK .)
+    DIVIDE          reduce using rule 27 (list -> LBRACK RBRACK .)
+    MODULO          reduce using rule 27 (list -> LBRACK RBRACK .)
+    EXP             reduce using rule 27 (list -> LBRACK RBRACK .)
+    FLDIV           reduce using rule 27 (list -> LBRACK RBRACK .)
+    AND             reduce using rule 27 (list -> LBRACK RBRACK .)
+    OR              reduce using rule 27 (list -> LBRACK RBRACK .)
+    LESST           reduce using rule 27 (list -> LBRACK RBRACK .)
+    GREATERT        reduce using rule 27 (list -> LBRACK RBRACK .)
+    LESSEQ          reduce using rule 27 (list -> LBRACK RBRACK .)
+    GREATEREQ       reduce using rule 27 (list -> LBRACK RBRACK .)
+    EQUALTO         reduce using rule 27 (list -> LBRACK RBRACK .)
+    NOTEQ           reduce using rule 27 (list -> LBRACK RBRACK .)
+    IN              reduce using rule 27 (list -> LBRACK RBRACK .)
+    $end            reduce using rule 27 (list -> LBRACK RBRACK .)
+    COMMA           reduce using rule 27 (list -> LBRACK RBRACK .)
+    RPAREN          reduce using rule 27 (list -> LBRACK RBRACK .)
+    SEMI            reduce using rule 27 (list -> LBRACK RBRACK .)
+
+
+state 36
+
+    (26) list -> LBRACK list_item . RBRACK
+    (28) list_item -> list_item . COMMA list_item
+
+    RBRACK          shift and go to state 60
+    COMMA           shift and go to state 59
+
+
+state 37
+
+    (21) expression -> LPAREN expression . RPAREN
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    RPAREN          shift and go to state 61
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    AND             shift and go to state 27
+    OR              shift and go to state 22
+    LESST           shift and go to state 33
+    GREATERT        shift and go to state 29
+    LESSEQ          shift and go to state 26
+    GREATEREQ       shift and go to state 25
+    EQUALTO         shift and go to state 24
+    NOTEQ           shift and go to state 32
+    IN              shift and go to state 23
+
+
+state 38
+
+    (1) statement -> VARNAME EQUALS expression . SEMI
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    SEMI            shift and go to state 62
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    AND             shift and go to state 27
+    OR              shift and go to state 22
+    LESST           shift and go to state 33
+    GREATERT        shift and go to state 29
+    LESSEQ          shift and go to state 26
+    GREATEREQ       shift and go to state 25
+    EQUALTO         shift and go to state 24
+    NOTEQ           shift and go to state 32
+    IN              shift and go to state 23
+
+
+state 39
+
+    (24) expression -> list LBRACK expression . RBRACK
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    RBRACK          shift and go to state 63
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    AND             shift and go to state 27
+    OR              shift and go to state 22
+    LESST           shift and go to state 33
+    GREATERT        shift and go to state 29
+    LESSEQ          shift and go to state 26
+    GREATEREQ       shift and go to state 25
+    EQUALTO         shift and go to state 24
+    NOTEQ           shift and go to state 32
+    IN              shift and go to state 23
+
+
+state 40
+
+    (25) expression -> string_expression LBRACK expression . RBRACK
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    RBRACK          shift and go to state 64
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    AND             shift and go to state 27
+    OR              shift and go to state 22
+    LESST           shift and go to state 33
+    GREATERT        shift and go to state 29
+    LESSEQ          shift and go to state 26
+    GREATEREQ       shift and go to state 25
+    EQUALTO         shift and go to state 24
+    NOTEQ           shift and go to state 32
+    IN              shift and go to state 23
+
+
+state 41
+
+    (30) string_expression -> string_expression PLUS string_expression .
+    (30) string_expression -> string_expression . PLUS string_expression
+
+    LBRACK          reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    IN              reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    PLUS            reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    SEMI            reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    MINUS           reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    MULT            reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    DIVIDE          reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    MODULO          reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    EXP             reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    FLDIV           reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    AND             reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    OR              reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    LESST           reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    GREATERT        reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    LESSEQ          reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    GREATEREQ       reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    EQUALTO         reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    NOTEQ           reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    $end            reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    RBRACK          reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    COMMA           reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+    RPAREN          reduce using rule 30 (string_expression -> string_expression PLUS string_expression .)
+
+  ! PLUS            [ shift and go to state 14 ]
+
+
+state 42
+
+    (33) expression -> string_expression IN string_expression .
+    (30) string_expression -> string_expression . PLUS string_expression
+
+    MINUS           reduce using rule 33 (expression -> string_expression IN string_expression .)
+    MULT            reduce using rule 33 (expression -> string_expression IN string_expression .)
+    DIVIDE          reduce using rule 33 (expression -> string_expression IN string_expression .)
+    MODULO          reduce using rule 33 (expression -> string_expression IN string_expression .)
+    EXP             reduce using rule 33 (expression -> string_expression IN string_expression .)
+    FLDIV           reduce using rule 33 (expression -> string_expression IN string_expression .)
+    AND             reduce using rule 33 (expression -> string_expression IN string_expression .)
+    OR              reduce using rule 33 (expression -> string_expression IN string_expression .)
+    LESST           reduce using rule 33 (expression -> string_expression IN string_expression .)
+    GREATERT        reduce using rule 33 (expression -> string_expression IN string_expression .)
+    LESSEQ          reduce using rule 33 (expression -> string_expression IN string_expression .)
+    GREATEREQ       reduce using rule 33 (expression -> string_expression IN string_expression .)
+    EQUALTO         reduce using rule 33 (expression -> string_expression IN string_expression .)
+    NOTEQ           reduce using rule 33 (expression -> string_expression IN string_expression .)
+    IN              reduce using rule 33 (expression -> string_expression IN string_expression .)
+    $end            reduce using rule 33 (expression -> string_expression IN string_expression .)
+    COMMA           reduce using rule 33 (expression -> string_expression IN string_expression .)
+    RBRACK          reduce using rule 33 (expression -> string_expression IN string_expression .)
+    RPAREN          reduce using rule 33 (expression -> string_expression IN string_expression .)
+    SEMI            reduce using rule 33 (expression -> string_expression IN string_expression .)
+    PLUS            shift and go to state 14
+
+  ! PLUS            [ reduce using rule 33 (expression -> string_expression IN string_expression .) ]
+
+
+state 43
+
+    (10) expression -> expression EXP expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    PLUS            reduce using rule 10 (expression -> expression EXP expression .)
+    MINUS           reduce using rule 10 (expression -> expression EXP expression .)
+    EXP             reduce using rule 10 (expression -> expression EXP expression .)
+    FLDIV           reduce using rule 10 (expression -> expression EXP expression .)
+    AND             reduce using rule 10 (expression -> expression EXP expression .)
+    OR              reduce using rule 10 (expression -> expression EXP expression .)
+    LESST           reduce using rule 10 (expression -> expression EXP expression .)
+    GREATERT        reduce using rule 10 (expression -> expression EXP expression .)
+    LESSEQ          reduce using rule 10 (expression -> expression EXP expression .)
+    GREATEREQ       reduce using rule 10 (expression -> expression EXP expression .)
+    EQUALTO         reduce using rule 10 (expression -> expression EXP expression .)
+    NOTEQ           reduce using rule 10 (expression -> expression EXP expression .)
+    IN              reduce using rule 10 (expression -> expression EXP expression .)
+    $end            reduce using rule 10 (expression -> expression EXP expression .)
+    COMMA           reduce using rule 10 (expression -> expression EXP expression .)
+    RBRACK          reduce using rule 10 (expression -> expression EXP expression .)
+    RPAREN          reduce using rule 10 (expression -> expression EXP expression .)
+    SEMI            reduce using rule 10 (expression -> expression EXP expression .)
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+
+  ! MULT            [ reduce using rule 10 (expression -> expression EXP expression .) ]
+  ! DIVIDE          [ reduce using rule 10 (expression -> expression EXP expression .) ]
+  ! MODULO          [ reduce using rule 10 (expression -> expression EXP expression .) ]
+  ! PLUS            [ shift and go to state 20 ]
+  ! MINUS           [ shift and go to state 30 ]
+  ! EXP             [ shift and go to state 18 ]
+  ! FLDIV           [ shift and go to state 28 ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+  ! IN              [ shift and go to state 23 ]
+
+
+state 44
+
+    (7) expression -> expression MULT expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    PLUS            reduce using rule 7 (expression -> expression MULT expression .)
+    MINUS           reduce using rule 7 (expression -> expression MULT expression .)
+    MULT            reduce using rule 7 (expression -> expression MULT expression .)
+    DIVIDE          reduce using rule 7 (expression -> expression MULT expression .)
+    MODULO          reduce using rule 7 (expression -> expression MULT expression .)
+    EXP             reduce using rule 7 (expression -> expression MULT expression .)
+    FLDIV           reduce using rule 7 (expression -> expression MULT expression .)
+    AND             reduce using rule 7 (expression -> expression MULT expression .)
+    OR              reduce using rule 7 (expression -> expression MULT expression .)
+    LESST           reduce using rule 7 (expression -> expression MULT expression .)
+    GREATERT        reduce using rule 7 (expression -> expression MULT expression .)
+    LESSEQ          reduce using rule 7 (expression -> expression MULT expression .)
+    GREATEREQ       reduce using rule 7 (expression -> expression MULT expression .)
+    EQUALTO         reduce using rule 7 (expression -> expression MULT expression .)
+    NOTEQ           reduce using rule 7 (expression -> expression MULT expression .)
+    IN              reduce using rule 7 (expression -> expression MULT expression .)
+    $end            reduce using rule 7 (expression -> expression MULT expression .)
+    COMMA           reduce using rule 7 (expression -> expression MULT expression .)
+    RBRACK          reduce using rule 7 (expression -> expression MULT expression .)
+    RPAREN          reduce using rule 7 (expression -> expression MULT expression .)
+    SEMI            reduce using rule 7 (expression -> expression MULT expression .)
+
+  ! PLUS            [ shift and go to state 20 ]
+  ! MINUS           [ shift and go to state 30 ]
+  ! MULT            [ shift and go to state 19 ]
+  ! DIVIDE          [ shift and go to state 31 ]
+  ! MODULO          [ shift and go to state 21 ]
+  ! EXP             [ shift and go to state 18 ]
+  ! FLDIV           [ shift and go to state 28 ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+  ! IN              [ shift and go to state 23 ]
+
+
+state 45
+
+    (5) expression -> expression PLUS expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    PLUS            reduce using rule 5 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 5 (expression -> expression PLUS expression .)
+    AND             reduce using rule 5 (expression -> expression PLUS expression .)
+    OR              reduce using rule 5 (expression -> expression PLUS expression .)
+    LESST           reduce using rule 5 (expression -> expression PLUS expression .)
+    GREATERT        reduce using rule 5 (expression -> expression PLUS expression .)
+    LESSEQ          reduce using rule 5 (expression -> expression PLUS expression .)
+    GREATEREQ       reduce using rule 5 (expression -> expression PLUS expression .)
+    EQUALTO         reduce using rule 5 (expression -> expression PLUS expression .)
+    NOTEQ           reduce using rule 5 (expression -> expression PLUS expression .)
+    IN              reduce using rule 5 (expression -> expression PLUS expression .)
+    $end            reduce using rule 5 (expression -> expression PLUS expression .)
+    COMMA           reduce using rule 5 (expression -> expression PLUS expression .)
+    RBRACK          reduce using rule 5 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 5 (expression -> expression PLUS expression .)
+    SEMI            reduce using rule 5 (expression -> expression PLUS expression .)
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+
+  ! MULT            [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! MODULO          [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! EXP             [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! FLDIV           [ reduce using rule 5 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 20 ]
+  ! MINUS           [ shift and go to state 30 ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+  ! IN              [ shift and go to state 23 ]
+
+
+state 46
+
+    (9) expression -> expression MODULO expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    PLUS            reduce using rule 9 (expression -> expression MODULO expression .)
+    MINUS           reduce using rule 9 (expression -> expression MODULO expression .)
+    MODULO          reduce using rule 9 (expression -> expression MODULO expression .)
+    EXP             reduce using rule 9 (expression -> expression MODULO expression .)
+    FLDIV           reduce using rule 9 (expression -> expression MODULO expression .)
+    AND             reduce using rule 9 (expression -> expression MODULO expression .)
+    OR              reduce using rule 9 (expression -> expression MODULO expression .)
+    LESST           reduce using rule 9 (expression -> expression MODULO expression .)
+    GREATERT        reduce using rule 9 (expression -> expression MODULO expression .)
+    LESSEQ          reduce using rule 9 (expression -> expression MODULO expression .)
+    GREATEREQ       reduce using rule 9 (expression -> expression MODULO expression .)
+    EQUALTO         reduce using rule 9 (expression -> expression MODULO expression .)
+    NOTEQ           reduce using rule 9 (expression -> expression MODULO expression .)
+    IN              reduce using rule 9 (expression -> expression MODULO expression .)
+    $end            reduce using rule 9 (expression -> expression MODULO expression .)
+    COMMA           reduce using rule 9 (expression -> expression MODULO expression .)
+    RBRACK          reduce using rule 9 (expression -> expression MODULO expression .)
+    RPAREN          reduce using rule 9 (expression -> expression MODULO expression .)
+    SEMI            reduce using rule 9 (expression -> expression MODULO expression .)
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+
+  ! MULT            [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! DIVIDE          [ reduce using rule 9 (expression -> expression MODULO expression .) ]
+  ! PLUS            [ shift and go to state 20 ]
+  ! MINUS           [ shift and go to state 30 ]
+  ! MODULO          [ shift and go to state 21 ]
+  ! EXP             [ shift and go to state 18 ]
+  ! FLDIV           [ shift and go to state 28 ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+  ! IN              [ shift and go to state 23 ]
+
+
+state 47
+
+    (13) expression -> expression OR expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    OR              reduce using rule 13 (expression -> expression OR expression .)
+    $end            reduce using rule 13 (expression -> expression OR expression .)
+    COMMA           reduce using rule 13 (expression -> expression OR expression .)
+    RBRACK          reduce using rule 13 (expression -> expression OR expression .)
+    RPAREN          reduce using rule 13 (expression -> expression OR expression .)
+    SEMI            reduce using rule 13 (expression -> expression OR expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    AND             shift and go to state 27
+    LESST           shift and go to state 33
+    GREATERT        shift and go to state 29
+    LESSEQ          shift and go to state 26
+    GREATEREQ       shift and go to state 25
+    EQUALTO         shift and go to state 24
+    NOTEQ           shift and go to state 32
+    IN              shift and go to state 23
+
+  ! PLUS            [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! MINUS           [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! MULT            [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! DIVIDE          [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! MODULO          [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! EXP             [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! FLDIV           [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! AND             [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! LESST           [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! GREATERT        [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! LESSEQ          [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! GREATEREQ       [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! EQUALTO         [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! NOTEQ           [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! IN              [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! OR              [ shift and go to state 22 ]
+
+
+state 48
+
+    (32) expression -> expression IN list .
+
+    PLUS            reduce using rule 32 (expression -> expression IN list .)
+    MINUS           reduce using rule 32 (expression -> expression IN list .)
+    MULT            reduce using rule 32 (expression -> expression IN list .)
+    DIVIDE          reduce using rule 32 (expression -> expression IN list .)
+    MODULO          reduce using rule 32 (expression -> expression IN list .)
+    EXP             reduce using rule 32 (expression -> expression IN list .)
+    FLDIV           reduce using rule 32 (expression -> expression IN list .)
+    AND             reduce using rule 32 (expression -> expression IN list .)
+    OR              reduce using rule 32 (expression -> expression IN list .)
+    LESST           reduce using rule 32 (expression -> expression IN list .)
+    GREATERT        reduce using rule 32 (expression -> expression IN list .)
+    LESSEQ          reduce using rule 32 (expression -> expression IN list .)
+    GREATEREQ       reduce using rule 32 (expression -> expression IN list .)
+    EQUALTO         reduce using rule 32 (expression -> expression IN list .)
+    NOTEQ           reduce using rule 32 (expression -> expression IN list .)
+    IN              reduce using rule 32 (expression -> expression IN list .)
+    $end            reduce using rule 32 (expression -> expression IN list .)
+    COMMA           reduce using rule 32 (expression -> expression IN list .)
+    RBRACK          reduce using rule 32 (expression -> expression IN list .)
+    RPAREN          reduce using rule 32 (expression -> expression IN list .)
+    SEMI            reduce using rule 32 (expression -> expression IN list .)
+
+
+state 49
+
+    (19) expression -> expression EQUALTO expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    AND             reduce using rule 19 (expression -> expression EQUALTO expression .)
+    OR              reduce using rule 19 (expression -> expression EQUALTO expression .)
+    LESST           reduce using rule 19 (expression -> expression EQUALTO expression .)
+    GREATERT        reduce using rule 19 (expression -> expression EQUALTO expression .)
+    LESSEQ          reduce using rule 19 (expression -> expression EQUALTO expression .)
+    GREATEREQ       reduce using rule 19 (expression -> expression EQUALTO expression .)
+    EQUALTO         reduce using rule 19 (expression -> expression EQUALTO expression .)
+    NOTEQ           reduce using rule 19 (expression -> expression EQUALTO expression .)
+    $end            reduce using rule 19 (expression -> expression EQUALTO expression .)
+    COMMA           reduce using rule 19 (expression -> expression EQUALTO expression .)
+    RBRACK          reduce using rule 19 (expression -> expression EQUALTO expression .)
+    RPAREN          reduce using rule 19 (expression -> expression EQUALTO expression .)
+    SEMI            reduce using rule 19 (expression -> expression EQUALTO expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    IN              shift and go to state 23
+
+  ! PLUS            [ reduce using rule 19 (expression -> expression EQUALTO expression .) ]
+  ! MINUS           [ reduce using rule 19 (expression -> expression EQUALTO expression .) ]
+  ! MULT            [ reduce using rule 19 (expression -> expression EQUALTO expression .) ]
+  ! DIVIDE          [ reduce using rule 19 (expression -> expression EQUALTO expression .) ]
+  ! MODULO          [ reduce using rule 19 (expression -> expression EQUALTO expression .) ]
+  ! EXP             [ reduce using rule 19 (expression -> expression EQUALTO expression .) ]
+  ! FLDIV           [ reduce using rule 19 (expression -> expression EQUALTO expression .) ]
+  ! IN              [ reduce using rule 19 (expression -> expression EQUALTO expression .) ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+
+
+state 50
+
+    (18) expression -> expression GREATEREQ expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    AND             reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    OR              reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    LESST           reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    GREATERT        reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    LESSEQ          reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    GREATEREQ       reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    EQUALTO         reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    NOTEQ           reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    $end            reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    COMMA           reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    RBRACK          reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    RPAREN          reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    SEMI            reduce using rule 18 (expression -> expression GREATEREQ expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    IN              shift and go to state 23
+
+  ! PLUS            [ reduce using rule 18 (expression -> expression GREATEREQ expression .) ]
+  ! MINUS           [ reduce using rule 18 (expression -> expression GREATEREQ expression .) ]
+  ! MULT            [ reduce using rule 18 (expression -> expression GREATEREQ expression .) ]
+  ! DIVIDE          [ reduce using rule 18 (expression -> expression GREATEREQ expression .) ]
+  ! MODULO          [ reduce using rule 18 (expression -> expression GREATEREQ expression .) ]
+  ! EXP             [ reduce using rule 18 (expression -> expression GREATEREQ expression .) ]
+  ! FLDIV           [ reduce using rule 18 (expression -> expression GREATEREQ expression .) ]
+  ! IN              [ reduce using rule 18 (expression -> expression GREATEREQ expression .) ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+
+
+state 51
+
+    (17) expression -> expression LESSEQ expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    AND             reduce using rule 17 (expression -> expression LESSEQ expression .)
+    OR              reduce using rule 17 (expression -> expression LESSEQ expression .)
+    LESST           reduce using rule 17 (expression -> expression LESSEQ expression .)
+    GREATERT        reduce using rule 17 (expression -> expression LESSEQ expression .)
+    LESSEQ          reduce using rule 17 (expression -> expression LESSEQ expression .)
+    GREATEREQ       reduce using rule 17 (expression -> expression LESSEQ expression .)
+    EQUALTO         reduce using rule 17 (expression -> expression LESSEQ expression .)
+    NOTEQ           reduce using rule 17 (expression -> expression LESSEQ expression .)
+    $end            reduce using rule 17 (expression -> expression LESSEQ expression .)
+    COMMA           reduce using rule 17 (expression -> expression LESSEQ expression .)
+    RBRACK          reduce using rule 17 (expression -> expression LESSEQ expression .)
+    RPAREN          reduce using rule 17 (expression -> expression LESSEQ expression .)
+    SEMI            reduce using rule 17 (expression -> expression LESSEQ expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    IN              shift and go to state 23
+
+  ! PLUS            [ reduce using rule 17 (expression -> expression LESSEQ expression .) ]
+  ! MINUS           [ reduce using rule 17 (expression -> expression LESSEQ expression .) ]
+  ! MULT            [ reduce using rule 17 (expression -> expression LESSEQ expression .) ]
+  ! DIVIDE          [ reduce using rule 17 (expression -> expression LESSEQ expression .) ]
+  ! MODULO          [ reduce using rule 17 (expression -> expression LESSEQ expression .) ]
+  ! EXP             [ reduce using rule 17 (expression -> expression LESSEQ expression .) ]
+  ! FLDIV           [ reduce using rule 17 (expression -> expression LESSEQ expression .) ]
+  ! IN              [ reduce using rule 17 (expression -> expression LESSEQ expression .) ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+
+
+state 52
+
+    (12) expression -> expression AND expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    AND             reduce using rule 12 (expression -> expression AND expression .)
+    OR              reduce using rule 12 (expression -> expression AND expression .)
+    $end            reduce using rule 12 (expression -> expression AND expression .)
+    COMMA           reduce using rule 12 (expression -> expression AND expression .)
+    RBRACK          reduce using rule 12 (expression -> expression AND expression .)
+    RPAREN          reduce using rule 12 (expression -> expression AND expression .)
+    SEMI            reduce using rule 12 (expression -> expression AND expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    LESST           shift and go to state 33
+    GREATERT        shift and go to state 29
+    LESSEQ          shift and go to state 26
+    GREATEREQ       shift and go to state 25
+    EQUALTO         shift and go to state 24
+    NOTEQ           shift and go to state 32
+    IN              shift and go to state 23
+
+  ! PLUS            [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! MINUS           [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! MULT            [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! DIVIDE          [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! MODULO          [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! EXP             [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! FLDIV           [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! LESST           [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! GREATERT        [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! LESSEQ          [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! GREATEREQ       [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! EQUALTO         [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! NOTEQ           [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! IN              [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+
+
+state 53
+
+    (11) expression -> expression FLDIV expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    PLUS            reduce using rule 11 (expression -> expression FLDIV expression .)
+    MINUS           reduce using rule 11 (expression -> expression FLDIV expression .)
+    FLDIV           reduce using rule 11 (expression -> expression FLDIV expression .)
+    AND             reduce using rule 11 (expression -> expression FLDIV expression .)
+    OR              reduce using rule 11 (expression -> expression FLDIV expression .)
+    LESST           reduce using rule 11 (expression -> expression FLDIV expression .)
+    GREATERT        reduce using rule 11 (expression -> expression FLDIV expression .)
+    LESSEQ          reduce using rule 11 (expression -> expression FLDIV expression .)
+    GREATEREQ       reduce using rule 11 (expression -> expression FLDIV expression .)
+    EQUALTO         reduce using rule 11 (expression -> expression FLDIV expression .)
+    NOTEQ           reduce using rule 11 (expression -> expression FLDIV expression .)
+    IN              reduce using rule 11 (expression -> expression FLDIV expression .)
+    $end            reduce using rule 11 (expression -> expression FLDIV expression .)
+    COMMA           reduce using rule 11 (expression -> expression FLDIV expression .)
+    RBRACK          reduce using rule 11 (expression -> expression FLDIV expression .)
+    RPAREN          reduce using rule 11 (expression -> expression FLDIV expression .)
+    SEMI            reduce using rule 11 (expression -> expression FLDIV expression .)
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+
+  ! MULT            [ reduce using rule 11 (expression -> expression FLDIV expression .) ]
+  ! DIVIDE          [ reduce using rule 11 (expression -> expression FLDIV expression .) ]
+  ! MODULO          [ reduce using rule 11 (expression -> expression FLDIV expression .) ]
+  ! EXP             [ reduce using rule 11 (expression -> expression FLDIV expression .) ]
+  ! PLUS            [ shift and go to state 20 ]
+  ! MINUS           [ shift and go to state 30 ]
+  ! FLDIV           [ shift and go to state 28 ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+  ! IN              [ shift and go to state 23 ]
+
+
+state 54
+
+    (16) expression -> expression GREATERT expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    AND             reduce using rule 16 (expression -> expression GREATERT expression .)
+    OR              reduce using rule 16 (expression -> expression GREATERT expression .)
+    LESST           reduce using rule 16 (expression -> expression GREATERT expression .)
+    GREATERT        reduce using rule 16 (expression -> expression GREATERT expression .)
+    LESSEQ          reduce using rule 16 (expression -> expression GREATERT expression .)
+    GREATEREQ       reduce using rule 16 (expression -> expression GREATERT expression .)
+    EQUALTO         reduce using rule 16 (expression -> expression GREATERT expression .)
+    NOTEQ           reduce using rule 16 (expression -> expression GREATERT expression .)
+    $end            reduce using rule 16 (expression -> expression GREATERT expression .)
+    COMMA           reduce using rule 16 (expression -> expression GREATERT expression .)
+    RBRACK          reduce using rule 16 (expression -> expression GREATERT expression .)
+    RPAREN          reduce using rule 16 (expression -> expression GREATERT expression .)
+    SEMI            reduce using rule 16 (expression -> expression GREATERT expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    IN              shift and go to state 23
+
+  ! PLUS            [ reduce using rule 16 (expression -> expression GREATERT expression .) ]
+  ! MINUS           [ reduce using rule 16 (expression -> expression GREATERT expression .) ]
+  ! MULT            [ reduce using rule 16 (expression -> expression GREATERT expression .) ]
+  ! DIVIDE          [ reduce using rule 16 (expression -> expression GREATERT expression .) ]
+  ! MODULO          [ reduce using rule 16 (expression -> expression GREATERT expression .) ]
+  ! EXP             [ reduce using rule 16 (expression -> expression GREATERT expression .) ]
+  ! FLDIV           [ reduce using rule 16 (expression -> expression GREATERT expression .) ]
+  ! IN              [ reduce using rule 16 (expression -> expression GREATERT expression .) ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+
+
+state 55
+
+    (6) expression -> expression MINUS expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    PLUS            reduce using rule 6 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 6 (expression -> expression MINUS expression .)
+    AND             reduce using rule 6 (expression -> expression MINUS expression .)
+    OR              reduce using rule 6 (expression -> expression MINUS expression .)
+    LESST           reduce using rule 6 (expression -> expression MINUS expression .)
+    GREATERT        reduce using rule 6 (expression -> expression MINUS expression .)
+    LESSEQ          reduce using rule 6 (expression -> expression MINUS expression .)
+    GREATEREQ       reduce using rule 6 (expression -> expression MINUS expression .)
+    EQUALTO         reduce using rule 6 (expression -> expression MINUS expression .)
+    NOTEQ           reduce using rule 6 (expression -> expression MINUS expression .)
+    IN              reduce using rule 6 (expression -> expression MINUS expression .)
+    $end            reduce using rule 6 (expression -> expression MINUS expression .)
+    COMMA           reduce using rule 6 (expression -> expression MINUS expression .)
+    RBRACK          reduce using rule 6 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 6 (expression -> expression MINUS expression .)
+    SEMI            reduce using rule 6 (expression -> expression MINUS expression .)
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+
+  ! MULT            [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! MODULO          [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! EXP             [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! FLDIV           [ reduce using rule 6 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 20 ]
+  ! MINUS           [ shift and go to state 30 ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+  ! IN              [ shift and go to state 23 ]
+
+
+state 56
+
+    (8) expression -> expression DIVIDE expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    PLUS            reduce using rule 8 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 8 (expression -> expression DIVIDE expression .)
+    MULT            reduce using rule 8 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 8 (expression -> expression DIVIDE expression .)
+    MODULO          reduce using rule 8 (expression -> expression DIVIDE expression .)
+    EXP             reduce using rule 8 (expression -> expression DIVIDE expression .)
+    FLDIV           reduce using rule 8 (expression -> expression DIVIDE expression .)
+    AND             reduce using rule 8 (expression -> expression DIVIDE expression .)
+    OR              reduce using rule 8 (expression -> expression DIVIDE expression .)
+    LESST           reduce using rule 8 (expression -> expression DIVIDE expression .)
+    GREATERT        reduce using rule 8 (expression -> expression DIVIDE expression .)
+    LESSEQ          reduce using rule 8 (expression -> expression DIVIDE expression .)
+    GREATEREQ       reduce using rule 8 (expression -> expression DIVIDE expression .)
+    EQUALTO         reduce using rule 8 (expression -> expression DIVIDE expression .)
+    NOTEQ           reduce using rule 8 (expression -> expression DIVIDE expression .)
+    IN              reduce using rule 8 (expression -> expression DIVIDE expression .)
+    $end            reduce using rule 8 (expression -> expression DIVIDE expression .)
+    COMMA           reduce using rule 8 (expression -> expression DIVIDE expression .)
+    RBRACK          reduce using rule 8 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 8 (expression -> expression DIVIDE expression .)
+    SEMI            reduce using rule 8 (expression -> expression DIVIDE expression .)
+
+  ! PLUS            [ shift and go to state 20 ]
+  ! MINUS           [ shift and go to state 30 ]
+  ! MULT            [ shift and go to state 19 ]
+  ! DIVIDE          [ shift and go to state 31 ]
+  ! MODULO          [ shift and go to state 21 ]
+  ! EXP             [ shift and go to state 18 ]
+  ! FLDIV           [ shift and go to state 28 ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+  ! IN              [ shift and go to state 23 ]
+
+
+state 57
+
+    (20) expression -> expression NOTEQ expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    AND             reduce using rule 20 (expression -> expression NOTEQ expression .)
+    OR              reduce using rule 20 (expression -> expression NOTEQ expression .)
+    LESST           reduce using rule 20 (expression -> expression NOTEQ expression .)
+    GREATERT        reduce using rule 20 (expression -> expression NOTEQ expression .)
+    LESSEQ          reduce using rule 20 (expression -> expression NOTEQ expression .)
+    GREATEREQ       reduce using rule 20 (expression -> expression NOTEQ expression .)
+    EQUALTO         reduce using rule 20 (expression -> expression NOTEQ expression .)
+    NOTEQ           reduce using rule 20 (expression -> expression NOTEQ expression .)
+    $end            reduce using rule 20 (expression -> expression NOTEQ expression .)
+    COMMA           reduce using rule 20 (expression -> expression NOTEQ expression .)
+    RBRACK          reduce using rule 20 (expression -> expression NOTEQ expression .)
+    RPAREN          reduce using rule 20 (expression -> expression NOTEQ expression .)
+    SEMI            reduce using rule 20 (expression -> expression NOTEQ expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    IN              shift and go to state 23
+
+  ! PLUS            [ reduce using rule 20 (expression -> expression NOTEQ expression .) ]
+  ! MINUS           [ reduce using rule 20 (expression -> expression NOTEQ expression .) ]
+  ! MULT            [ reduce using rule 20 (expression -> expression NOTEQ expression .) ]
+  ! DIVIDE          [ reduce using rule 20 (expression -> expression NOTEQ expression .) ]
+  ! MODULO          [ reduce using rule 20 (expression -> expression NOTEQ expression .) ]
+  ! EXP             [ reduce using rule 20 (expression -> expression NOTEQ expression .) ]
+  ! FLDIV           [ reduce using rule 20 (expression -> expression NOTEQ expression .) ]
+  ! IN              [ reduce using rule 20 (expression -> expression NOTEQ expression .) ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+
+
+state 58
+
+    (15) expression -> expression LESST expression .
+    (5) expression -> expression . PLUS expression
+    (6) expression -> expression . MINUS expression
+    (7) expression -> expression . MULT expression
+    (8) expression -> expression . DIVIDE expression
+    (9) expression -> expression . MODULO expression
+    (10) expression -> expression . EXP expression
+    (11) expression -> expression . FLDIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (15) expression -> expression . LESST expression
+    (16) expression -> expression . GREATERT expression
+    (17) expression -> expression . LESSEQ expression
+    (18) expression -> expression . GREATEREQ expression
+    (19) expression -> expression . EQUALTO expression
+    (20) expression -> expression . NOTEQ expression
+    (32) expression -> expression . IN list
+
+    AND             reduce using rule 15 (expression -> expression LESST expression .)
+    OR              reduce using rule 15 (expression -> expression LESST expression .)
+    LESST           reduce using rule 15 (expression -> expression LESST expression .)
+    GREATERT        reduce using rule 15 (expression -> expression LESST expression .)
+    LESSEQ          reduce using rule 15 (expression -> expression LESST expression .)
+    GREATEREQ       reduce using rule 15 (expression -> expression LESST expression .)
+    EQUALTO         reduce using rule 15 (expression -> expression LESST expression .)
+    NOTEQ           reduce using rule 15 (expression -> expression LESST expression .)
+    $end            reduce using rule 15 (expression -> expression LESST expression .)
+    COMMA           reduce using rule 15 (expression -> expression LESST expression .)
+    RBRACK          reduce using rule 15 (expression -> expression LESST expression .)
+    RPAREN          reduce using rule 15 (expression -> expression LESST expression .)
+    SEMI            reduce using rule 15 (expression -> expression LESST expression .)
+    PLUS            shift and go to state 20
+    MINUS           shift and go to state 30
+    MULT            shift and go to state 19
+    DIVIDE          shift and go to state 31
+    MODULO          shift and go to state 21
+    EXP             shift and go to state 18
+    FLDIV           shift and go to state 28
+    IN              shift and go to state 23
+
+  ! PLUS            [ reduce using rule 15 (expression -> expression LESST expression .) ]
+  ! MINUS           [ reduce using rule 15 (expression -> expression LESST expression .) ]
+  ! MULT            [ reduce using rule 15 (expression -> expression LESST expression .) ]
+  ! DIVIDE          [ reduce using rule 15 (expression -> expression LESST expression .) ]
+  ! MODULO          [ reduce using rule 15 (expression -> expression LESST expression .) ]
+  ! EXP             [ reduce using rule 15 (expression -> expression LESST expression .) ]
+  ! FLDIV           [ reduce using rule 15 (expression -> expression LESST expression .) ]
+  ! IN              [ reduce using rule 15 (expression -> expression LESST expression .) ]
+  ! AND             [ shift and go to state 27 ]
+  ! OR              [ shift and go to state 22 ]
+  ! LESST           [ shift and go to state 33 ]
+  ! GREATERT        [ shift and go to state 29 ]
+  ! LESSEQ          [ shift and go to state 26 ]
+  ! GREATEREQ       [ shift and go to state 25 ]
+  ! EQUALTO         [ shift and go to state 24 ]
+  ! NOTEQ           [ shift and go to state 32 ]
+
+
+state 59
+
+    (28) list_item -> list_item COMMA . list_item
+    (28) list_item -> . list_item COMMA list_item
+    (29) list_item -> . expression
+    (3) expression -> . string_expression
+    (4) expression -> . list
+    (5) expression -> . expression PLUS expression
+    (6) expression -> . expression MINUS expression
+    (7) expression -> . expression MULT expression
+    (8) expression -> . expression DIVIDE expression
+    (9) expression -> . expression MODULO expression
+    (10) expression -> . expression EXP expression
+    (11) expression -> . expression FLDIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . NOT expression
+    (15) expression -> . expression LESST expression
+    (16) expression -> . expression GREATERT expression
+    (17) expression -> . expression LESSEQ expression
+    (18) expression -> . expression GREATEREQ expression
+    (19) expression -> . expression EQUALTO expression
+    (20) expression -> . expression NOTEQ expression
+    (21) expression -> . LPAREN expression RPAREN
+    (22) expression -> . NUMBER
+    (23) expression -> . VARNAME
+    (24) expression -> . list LBRACK expression RBRACK
+    (25) expression -> . string_expression LBRACK expression RBRACK
+    (32) expression -> . expression IN list
+    (33) expression -> . string_expression IN string_expression
+    (30) string_expression -> . string_expression PLUS string_expression
+    (31) string_expression -> . STRING
+    (26) list -> . LBRACK list_item RBRACK
+    (27) list -> . LBRACK RBRACK
+
+    NOT             shift and go to state 5
+    LPAREN          shift and go to state 10
+    NUMBER          shift and go to state 9
+    VARNAME         shift and go to state 16
+    STRING          shift and go to state 7
+    LBRACK          shift and go to state 8
+
+    string_expression              shift and go to state 4
+    list_item                      shift and go to state 65
+    expression                     shift and go to state 34
+    list                           shift and go to state 2
+
+state 60
+
+    (26) list -> LBRACK list_item RBRACK .
+
+    LBRACK          reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    RBRACK          reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    PLUS            reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    MINUS           reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    MULT            reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    DIVIDE          reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    MODULO          reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    EXP             reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    FLDIV           reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    AND             reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    OR              reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    LESST           reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    GREATERT        reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    LESSEQ          reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    GREATEREQ       reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    EQUALTO         reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    NOTEQ           reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    IN              reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    $end            reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    COMMA           reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    RPAREN          reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+    SEMI            reduce using rule 26 (list -> LBRACK list_item RBRACK .)
+
+
+state 61
+
+    (21) expression -> LPAREN expression RPAREN .
+
+    PLUS            reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    MULT            reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    MODULO          reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    EXP             reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    FLDIV           reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    AND             reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    OR              reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    LESST           reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    GREATERT        reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    LESSEQ          reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    GREATEREQ       reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    EQUALTO         reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    NOTEQ           reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    IN              reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    $end            reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    RBRACK          reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+    SEMI            reduce using rule 21 (expression -> LPAREN expression RPAREN .)
+
+
+state 62
+
+    (1) statement -> VARNAME EQUALS expression SEMI .
+
+    $end            reduce using rule 1 (statement -> VARNAME EQUALS expression SEMI .)
+
+
+state 63
+
+    (24) expression -> list LBRACK expression RBRACK .
+
+    PLUS            reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    MINUS           reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    MULT            reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    DIVIDE          reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    MODULO          reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    EXP             reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    FLDIV           reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    AND             reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    OR              reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    LESST           reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    GREATERT        reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    LESSEQ          reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    GREATEREQ       reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    EQUALTO         reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    NOTEQ           reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    IN              reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    $end            reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    COMMA           reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    RBRACK          reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    RPAREN          reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+    SEMI            reduce using rule 24 (expression -> list LBRACK expression RBRACK .)
+
+
+state 64
+
+    (25) expression -> string_expression LBRACK expression RBRACK .
+
+    PLUS            reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    MINUS           reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    MULT            reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    DIVIDE          reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    MODULO          reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    EXP             reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    FLDIV           reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    AND             reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    OR              reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    LESST           reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    GREATERT        reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    LESSEQ          reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    GREATEREQ       reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    EQUALTO         reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    NOTEQ           reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    IN              reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    $end            reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    COMMA           reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    RBRACK          reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    RPAREN          reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+    SEMI            reduce using rule 25 (expression -> string_expression LBRACK expression RBRACK .)
+
+
+state 65
+
+    (28) list_item -> list_item COMMA list_item .
+    (28) list_item -> list_item . COMMA list_item
+
+  ! shift/reduce conflict for COMMA resolved as shift
+    RBRACK          reduce using rule 28 (list_item -> list_item COMMA list_item .)
+    COMMA           shift and go to state 59
+
+  ! COMMA           [ reduce using rule 28 (list_item -> list_item COMMA list_item .) ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for IN in state 4 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 4 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 65 resolved as shift
