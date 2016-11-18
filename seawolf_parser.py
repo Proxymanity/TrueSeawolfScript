@@ -19,6 +19,87 @@ precedence = (
     ('left', 'MULT', 'DIVIDE'),
 )
 
+
+class Node:
+    def __init__(self, type, children=None, leaf=None):
+        self.type = type
+        if children:
+            self.children = children
+        else:
+            self.children = []
+        self.leaf = leaf
+
+    def evaluate(self):
+        print("Evaluate")
+        return 0
+
+    def execute(self):
+        print("Execute")
+
+
+class StringNode(Node):
+    def __init__(self, v):
+        self.value = str(v)
+        self.value = self.value[1:-1]  # to eliminate the left and right double quotes
+        print("StringNode")
+
+    def evaluate(self):
+        print("Evaluate StringNode")
+        return self.value
+
+    def execute(self):
+        print("Execute StringNode")
+        return(self).value
+
+
+class NumberNode(Node):
+    def __init__(self, v):
+        self.value = int(v)
+        print("NumberNode")
+    def evaluate(self):
+        print("Evaluate NumberNode")
+        return self.value
+    def execute(self):
+        print("Execute NumberNode")
+        return(self.value)
+
+class PrintNode(Node):
+    def __init__(self, v):
+        self.value = v
+        ("PrintNode")
+
+    def evaluate(self):
+        print("Evaluate PrintNode")
+        return 0
+
+    def execute(self):
+        print("Execute NumberNode")
+        print(self.value.evaluate())
+
+
+class BlockNode(Node):
+    def __init__(self, sl):
+        self.statementNodes = [sl]
+        print("BlockNode")
+
+    def evaluate(self):
+        print("Evaluate BlockNode")
+        return 0
+
+    def execute(self):
+        print("Execute BlockNode")
+        for statement in self.statementNodes:
+            statement.execute()
+
+
+
+def p_statements(p):
+    """
+        statements : statement
+                    | statement statements
+    """
+    p[0] = p[1]
+
 def p_assignment(p):
     """
         statement : VARNAME EQUALS expression SEMI
@@ -28,8 +109,19 @@ def p_assignment(p):
 def p_statement(p):
     """
         statement : expression
+                    | LCURL statements RCURL
     """
-    print(p[1])
+    if(p[1] == '{'):
+        p[0] = BlockNode(p[2])
+    elif(isinstance(p[1],int)):
+        print("Number")
+        p[0] = NumberNode(p[1])
+    elif(isinstance(p[1],str)):
+        print("string")
+        p[0] = StringNode(p[1])
+    else:
+        p[0] = p[1]
+
 
 def p_expression_string(p):
     """

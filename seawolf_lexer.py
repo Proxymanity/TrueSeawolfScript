@@ -8,6 +8,7 @@ reserved = {
     'in' : 'IN',
     'print' : 'PRINT',
     'if' : 'IF',
+    'else' : 'ELSE',
     'while' : 'WHILE'
 
 }
