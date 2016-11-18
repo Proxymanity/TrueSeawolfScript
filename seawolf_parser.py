@@ -36,11 +36,21 @@ class Node:
     def execute(self):
         print("Execute")
 
+class ListNode(Node):
+    def __init__(self,l):
+        self.value = list(l)
+        print("ListNode")
+    def evaluate(self):
+        print("Evaluate ListNode")
+        return self.value
+
+    def execute(self):
+        return self.value
 
 class StringNode(Node):
     def __init__(self, v):
         self.value = str(v)
-        self.value = self.value[1:-1]  # to eliminate the left and right double quotes
+        #self.value = self.value[1:-1]  # to eliminate the left and right double quotes uneeded
         print("StringNode")
 
     def evaluate(self):
@@ -49,7 +59,7 @@ class StringNode(Node):
 
     def execute(self):
         print("Execute StringNode")
-        return(self).value
+        return self.value
 
 
 class NumberNode(Node):
@@ -62,6 +72,36 @@ class NumberNode(Node):
     def execute(self):
         print("Execute NumberNode")
         return(self.value)
+
+class IfNode(Node):
+    def __init__(self, c, t, e):
+        self.condition = c
+        self.thenBlock = t
+        self.elseBlock= e
+        print("IfNode")
+    def evaluate(self):
+        print("Evaluate IfNode")
+        return 0
+    def execute(self):
+        print("Execute IfNode")
+        if(self.condition.evaluate()):
+            self.thenBlock.execute()
+        else:
+            self.elseBlock.execute()
+
+class IfNode2(Node):
+    def __init__(self, c, t):
+        self.condition = c
+        self.thenBlock = t
+        print("IfNode2")
+    def evaluate(self):
+        print("Evaluate IfNode2")
+        return 0
+    def execute(self):
+        print("Execute IfNode2")
+        if(self.condition.evaluate()):
+            self.thenBlock.execute()
+
 
 class PrintNode(Node):
     def __init__(self, v):
@@ -92,7 +132,6 @@ class BlockNode(Node):
             statement.execute()
 
 
-
 def p_statements(p):
     """
         statements : statement
@@ -105,7 +144,11 @@ def p_assignment(p):
         statement : VARNAME EQUALS expression SEMI
     """
     global_variables[p[1]] = p[3]
-
+def p_print(p):
+    """
+        statements : PRINT LPAREN statements RPAREN SEMI
+    """
+    p[0] = PrintNode(p[3])
 def p_statement(p):
     """
         statement : expression
@@ -120,8 +163,26 @@ def p_statement(p):
         print("string")
         p[0] = StringNode(p[1])
     else:
-        p[0] = p[1]
+        p[0] = ListNode(p[1])
 
+def p_if(p):
+    """
+        statement : IF LPAREN statements RPAREN LCURL statements RCURL else
+    """
+    if(not(p[8] is None)):
+        print("noner")
+        p[0] = IfNode(p[3],p[6],p[8])
+    else:
+        p[0] = p[0] = IfNode2(p[3],p[6])
+def p_else(p):
+    """
+       else : ELSE LCURL statements RCURL
+                    | empty
+    """
+    if(len(p) > 2):
+        p[0] = p[3]
+    else:
+        pass
 
 def p_expression_string(p):
     """
@@ -323,6 +384,13 @@ def p_in(p):
             p[0] = 1
         else:
             p[0] = 0
+
+
+def p_empty(p):
+    """
+        empty :
+    """
+    pass
 
 def p_error(p):
     print("SYNTAX ERROR")
