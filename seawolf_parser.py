@@ -145,7 +145,9 @@ class WhileNode(Node):
         print("WhileNode")
     def evaluate(self):
         print("Evaluate while")
-        return 0
+        while(self.condition.evaluate()):
+            print("WhileLooping")
+            self.thenBlock.execute()
     def execute(self):
         print("Execute while")
         while(self.condition.evaluate()):
@@ -227,6 +229,8 @@ class binOPNode(Node):
         elif self.b == '/':
             result = self.a.evaluate() / self.c.evaluate()
         elif self.b == '%':
+            arg1 = self.a.evaluate()
+            arg2 = self.c.evaluate()
             result = self.a.evaluate() % self.c.evaluate()
         elif self.b == '**':
             result = self.a.evaluate() ** self.c.evaluate()
@@ -234,7 +238,7 @@ class binOPNode(Node):
             result = self.a.evaluate() // self.c.evaluate()
         if (isinstance(result, int)):
             print("Number")
-            return NumberNode(result)
+            return (result)
         elif (isinstance(result, float)):
             print("float")
             return FloatNode(result)
@@ -287,7 +291,7 @@ class CompareNode(Node):
         #self.arg2.evaluate()
         if(isinstance(self.arg1,int)):
             self.arg1= NumberNode(self.arg1)
-        if(isinstance(self.arg1,int)):
+        if(isinstance(self.arg2,int)):
             self.arg2= NumberNode(self.arg2)
 
         if self.op == '<':
@@ -311,6 +315,8 @@ class CompareNode(Node):
             else:
                 result = 0
         elif self.op == '==':
+            a1=self.arg1.evaluate()
+            a2=self.arg2.evaluate()
             if  self.arg1.evaluate() == self.arg2.evaluate():
                 result = 1
             else:
@@ -390,7 +396,7 @@ class LogicNode(Node):
                 semanticError()
         else:
             semanticError()
-        return result
+        return (result)
 
     def execute(self):
         print("Execute Logic")
@@ -592,7 +598,7 @@ def p_expression_number(p):
     """
         expression : NUMBER
     """
-    p[0] = NumberNode(p[1])
+    p[0] = (p[1])
 
 def p_expression_var(p):
     """
