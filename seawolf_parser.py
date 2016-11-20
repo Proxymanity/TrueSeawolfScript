@@ -32,81 +32,176 @@ class Node:
         self.leaf = leaf
 
     def evaluate(self):
-        print("Evaluate")
+        #print("Evaluate")
         return 0
 
     def execute(self):
-        print("Execute")
+        #print("Execute")
+        return 0
 
 class AssignNode(Node):
     def __init__(self,Name,Value):
         self.name = Name
         self.value = Value
-        print("AssignNode")
+        #print("AssignNode")
     def evaluate(self):
-        print("AssignNode Evaluate")
-        if(isinstance(self.value,binOPNode)):
+        #print("AssignNode Evaluate")
+        if(isinstance(self.value,binOPNode) or isinstance(self.value,IndexNode) or isinstance(self.value,VarNode)):
             print(self.value.evaluate())
+            global_variables[self.name] = self.value.evaluate()
+        else:
+
+            global_variables[self.name] = self.value
+        pass
+
+    def execute(self):
+        #print("AssignNode Execute")
+        if(isinstance(self.value,binOPNode) or isinstance(self.value,IndexNode) or isinstance(self.value,VarNode)):
             global_variables[self.name] = self.value.evaluate()
         else:
             global_variables[self.name] = self.value
         pass
 
+class IndexAssignNode(Node):
+    def __init__(self,name,value):
+        self.name = name
+        self.value = value
+
+    def evaluate(self):
+        #print("Evalutate IndexAssign")
+        if(isinstance(self.value,int)):
+            self.value = NumberNode(self.value)
+        elif(isinstance(self.value,str)):
+            self.value = StringNode(self.value)
+        elif(isinstance(self.value,list)):
+            self.value = ListNode(self.value)
+        elif(isinstance(self.value,float)):
+            self.value = FloatNode(self.value)
+        a=self.name.evaluate()
+        b=self.value.evaluate()
+
+        varIndex = self.name.assignHelper()
+        #print("hi")
+
     def execute(self):
-        print("AssignNode Execute")
-        if(isinstance(self.value,binOPNode)):
-            print(self.value.evaluate())
-            global_variables[self.name] = self.value.evaluate()
-        else:
-            global_variables[self.name] = self.value
-        pass
+        #print("Execute IndexAssign")
+        if(isinstance(self.value,int)):
+            self.value = NumberNode(self.value)
+        elif(isinstance(self.value,str)):
+            self.value = StringNode(self.value)
+        elif(isinstance(self.value,list)):
+            self.value = ListNode(self.value)
+        elif(isinstance(self.value,float)):
+            self.value = FloatNode(self.value)
+        a=self.name.evaluate()
+        b=self.value.evaluate()
+
+
+        varIndex = self.name.assignHelper()
+        variable = varIndex[0]
+        indexes = []
+        for index in varIndex:
+            if(not(isinstance(index,int) or isinstance(index,str))):
+                indexes = indexes + [index.evaluate()]
+        tempVar = global_variables[variable]
+
+        var = global_variables[variable]
+        for index in indexes:
+            var = var[index]
+        var = self.value.evaluate();
+        #global_variables[variable][0][1] = 9;
+        #print("test");
 
 class ListNode(Node):
     def __init__(self,l):
         self.value = list(l)
-        print("ListNode")
+        #print("ListNode")
     def evaluate(self):
-        print("Evaluate ListNode")
+        #print("Evaluate ListNode")
         return self.value
 
     def execute(self):
         return self.value
+
+class IndexNode(Node):
+    def __init__(self,arg1,arg2):
+        #print("IndexNode")
+        varName = 0;
+        try:
+            global_variables[arg1]
+            varName = arg1
+            arg1 = VarNode(arg1)
+        except LookupError:
+            arg1 = arg1
+        self.item = arg1
+        self.variable = varName
+        self.index = arg2
+    def evaluate(self):
+        #print("Evaluate IndexNode")
+        if (isinstance(self.item, list)):
+            self.item = ListNode(self.item)
+        elif (isinstance(self.item, str)):
+            self.item = StringNode(self.item)
+
+        if (isinstance(self.index, int)):
+            self.index = NumberNode(self.index)
+
+        result = self.item.evaluate()[self.index.evaluate()]
+        return result
+    def execute(self):
+        #print("Execute IndexNode")
+        if(isinstance(self.item,list)):
+            self.item = ListNode(self.item)
+        elif(isinstance(self.item,str)):
+            self.item = StringNode(self.item)
+
+        if(isinstance(self.index,int)):
+            self.index = NumberNode(self.index)
+
+        result = self.item.evaluate()[self.index.evaluate()]
+        return result
+
+    def assignHelper(self):
+        r=[]
+        if(isinstance(self.item, IndexNode)):
+            r = self.item.assignHelper()
+        return r + [self.variable,self.index]
 
 class StringNode(Node):
     def __init__(self, v):
         self.value = str(v)
         #self.value = self.value[1:-1]  # to eliminate the left and right double quotes uneeded
-        print("StringNode")
-        print("v is " + str(v))
+        #print("StringNode")
+        #print("v is " + str(v))
     def evaluate(self):
-        print("Evaluate StringNode")
+        #print("Evaluate StringNode")
         return self.value
 
     def execute(self):
-        print("Execute StringNode")
+        #print("Execute StringNode")
         return self.value
 class FloatNode(Node):
     def __init__(self, v):
         self.value = v
-        print("FloatNode")
+        #print("FloatNode")
 
     def evaluate(self):
-        print("Evaluate FloatNode")
+        #print("Evaluate FloatNode")
         return self.value
 
     def execute(self):
-        print("Execute FloatNode")
+        #print("Execute FloatNode")
         return (self.value)
 
 class NumberNode(Node):
     def __init__(self, v):
         self.value = int(v)
-        print("NumberNode")
+        #print("NumberNode")
     def evaluate(self):
-        print("Evaluate NumberNode")
+        #print("Evaluate NumberNode")
         return self.value
     def execute(self):
-        print("Execute NumberNode")
+        #print("Execute NumberNode")
         return(self.value)
 
 class IfNode(Node):
@@ -114,12 +209,12 @@ class IfNode(Node):
         self.condition = c
         self.thenBlock = BlockNode(t)
         self.elseBlock= BlockNode(e)
-        print("IfNode")
+        #print("IfNode")
     def evaluate(self):
-        print("Evaluate IfNode")
+        #print("Evaluate IfNode")
         return 0
     def execute(self):
-        print("Execute IfNode")
+        #print("Execute IfNode")
         if(self.condition.evaluate()):
             self.thenBlock.execute()
         else:
@@ -129,12 +224,12 @@ class IfNode2(Node):
     def __init__(self, c, t):
         self.condition = c
         self.thenBlock = BlockNode(t)
-        print("ifNode2")
+        #print("ifNode2")
     def evaluate(self):
-        print("Evaluate ifNode2")
+        #print("Evaluate ifNode2")
         return 0
     def execute(self):
-        print("Execute ifNode2")
+        #print("Execute ifNode2")
         if(self.condition.evaluate()):
             self.thenBlock.execute()
 
@@ -142,16 +237,16 @@ class WhileNode(Node):
     def __init__(self, c, t):
         self.condition = c
         self.thenBlock = BlockNode(t)
-        print("WhileNode")
+        #print("WhileNode")
     def evaluate(self):
-        print("Evaluate while")
+        #print("Evaluate while")
         while(self.condition.evaluate()):
-            print("WhileLooping")
+            #print("WhileLooping")
             self.thenBlock.execute()
     def execute(self):
-        print("Execute while")
+        #print("Execute while")
         while(self.condition.evaluate()):
-            print("WhileLooping")
+            #print("WhileLooping")
             self.thenBlock.execute()
 
 
@@ -161,11 +256,11 @@ class PrintNode(Node):
         ("PrintNode")
 
     def evaluate(self):
-        print("Evaluate PrintNode")
+        #print("Evaluate PrintNode")
         print(self.value.evaluate())
 
     def execute(self):
-        print("Execute PrintNode")
+        #print("Execute PrintNode")
         print(self.value.evaluate())
 
 
@@ -175,20 +270,21 @@ class BlockNode(Node):
             self.statementNodes = sl
         else:
             self.statementNodes = [sl]
-        print("BlockNode")
+        #print("BlockNode")
 
     def evaluate(self):
-        print("Evaluate BlockNode")
-        return 0
+        #print("Evaluate BlockNode")
+        for statement in self.statementNodes:
+            statement.execute()
 
     def execute(self):
-        print("Execute BlockNode")
+        #print("Execute BlockNode")
         for statement in self.statementNodes:
             statement.execute()
 
 class VarNode(Node):
     def __init__(self,Name):
-        print("VarNode")
+        #print("VarNode")
         self.name = Name
     def evaluate(self):
         try:
@@ -237,15 +333,16 @@ class binOPNode(Node):
         elif self.b == '//':
             result = self.a.evaluate() // self.c.evaluate()
         if (isinstance(result, int)):
-            print("Number")
+            #print("NumberBin")
             return (result)
         elif (isinstance(result, float)):
-            print("float")
+            #print("floatBin")
             return FloatNode(result)
         elif (isinstance(result, str)):
-            print("string")
+            #print("stringBin")
             return StringNode(result)
         elif (isinstance(result, list)):
+            #print("listBin")
             return ListNode(result)
 
     def execute(self):
@@ -269,15 +366,16 @@ class binOPNode(Node):
         elif self.b == '//':
             result = self.a.evaluate() // self.c.evaluate()
         if (isinstance(result, int)):
-            print("Number")
+            #print("NumberBin")
             return NumberNode(result)
         elif (isinstance(result, float)):
-            print("float")
+            #print("floatBin")
             return FloatNode(result)
         elif (isinstance(result, str)):
-            print("string")
+            #print("stringBin")
             return StringNode(result)
         elif (isinstance(result, list)):
+            #print("ListBin")
             return ListNode(result)
 
 
@@ -368,12 +466,12 @@ class CompareNode(Node):
 
 class LogicNode(Node):
     def __init__(self,a,b,c):
-        print("Logic")
+        #print("Logic")
         self.arg1 = a
         self.op = b
         self.arg2 = c
     def evaluate(self):
-        print("evaluate Logic")
+        #print("evaluate Logic")
         if(isinstance(self.arg1,int)):
             self.arg1= NumberNode(self.arg1)
         if(isinstance(self.arg1,int)):
@@ -399,7 +497,7 @@ class LogicNode(Node):
         return (result)
 
     def execute(self):
-        print("Execute Logic")
+        #print("Execute Logic")
         if(isinstance(self.arg1,int)):
             self.arg1= NumberNode(self.arg1)
         if(isinstance(self.arg1,int)):
@@ -426,10 +524,10 @@ class LogicNode(Node):
 
 class NotNode(Node):
     def __init__(self,a):
-        print("NotNode")
+        #print("NotNode")
         self.arg = a
     def evaluate(self):
-        print("Evaluate Not")
+        #print("Evaluate Not")
         if(isinstance(self.arg,int)):
             self.arg= NumberNode(self.arg)
 
@@ -442,7 +540,7 @@ class NotNode(Node):
         else:
             semanticError()
     def execute(self):
-        print("Execute Not")
+        #print("Execute Not")
         if(isinstance(self.arg,int)):
             self.arg= NumberNode(self.arg)
         a = self.arg.evaluate
@@ -474,8 +572,8 @@ def p_assign(p):
     """
         statement : VARNAME EQUALS expression SEMI
     """
-    print("assignment")
-    global_variables[p[1]] = 0
+    #print("assignment")
+    global_variables[p[1]] = 1
     p[0] = AssignNode(p[1],p[3])
 
 
@@ -494,13 +592,13 @@ def p_statement(p):
     if(p[1] == '{'):
         p[0] = BlockNode(p[2])
     elif(isinstance(p[1],int)):
-        print("Number")
+        #print("Number")
         p[0] = NumberNode(p[1])
     elif(isinstance(p[1],float)):
-        print("float")
+        #print("float")
         p[0] = FloatNode(p[1])
     elif(isinstance(p[1],str)):
-        print("string")
+        #print("string")
         p[0] = StringNode(p[1])
     elif(isinstance(p[1],list)):
         p[0] = ListNode(p[1])
@@ -581,7 +679,7 @@ def p_expression_compare(p):
                 | expression EQUALTO expression
                 | expression NOTEQ expression
     """
-    print("compare")
+    #print("compare")
     p[0] = CompareNode(p[1],p[2],p[3])
 
 
@@ -604,17 +702,29 @@ def p_expression_var(p):
     """
         expression : VARNAME
     """
+
     p[0] = VarNode(p[1])
 
 def p_index(p):
+    """expression : index"""
+    p[0] = p[1]
+
+def p_index_assign(p):
+    """index : index EQUALS expression SEMI"""
+    #print("INDEX ASSIGN");
+    p[0] = IndexAssignNode(p[1],p[3])
+
+def p_index_item(p):
     """
-        expression : list LBRACK expression RBRACK
+        index : list LBRACK expression RBRACK
                 | string_expression LBRACK expression RBRACK
+                | VARNAME LBRACK expression RBRACK
+                | index LBRACK expression RBRACK
     """
-    if(isinstance(p[3],int) and(isinstance(p[1], list) or isinstance(p[1],str))):
-            p[0] = (p[1])[p[3]]
-    else:
-        p[0] = "SEMANTIC ERROR"
+    #print("Indexing")
+    r = IndexNode(p[1],p[3])
+    p[0] = r
+
 
 def p_list(p):
     """
