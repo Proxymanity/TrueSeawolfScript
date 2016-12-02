@@ -2,7 +2,7 @@ import ply
 from ply import yacc
 import seawolf_lexer
 from seawolf_lexer import tokens
-
+#Calvin Kwok ID: 109209504
 error = False;
 
 global_variables = dict()
@@ -62,6 +62,16 @@ class AssignNode(Node):
             global_variables[self.name] = self.value
         pass
 
+
+def recursiveIndexer(list, value, indexes):
+    if (indexes == []):
+        return value
+    else:
+        i = indexes[0]
+        list[i] = recursiveIndexer(list[i], value, indexes[1:])
+        return list
+
+
 class IndexAssignNode(Node):
     def __init__(self,name,value):
         self.name = name
@@ -101,14 +111,11 @@ class IndexAssignNode(Node):
         variable = varIndex[0]
         indexes = []
         for index in varIndex:
-            if(not(isinstance(index,int) or isinstance(index,str))):
+            if(not(isinstance(index,int) or isinstance(index,str))): #The str and int are the variable names retrieved from the IndexaNodes
                 indexes = indexes + [index.evaluate()]
         tempVar = global_variables[variable]
 
-        var = global_variables[variable]
-        for index in indexes:
-            var = var[index]
-        var = self.value.evaluate();
+        tempVar = recursiveIndexer(tempVar,self.value.evaluate(),indexes)
         #global_variables[variable][0][1] = 9;
         #print("test");
 
